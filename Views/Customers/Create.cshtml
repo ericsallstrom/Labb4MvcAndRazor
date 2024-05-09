@@ -1,0 +1,53 @@
+﻿@model Labb4MvcAndRazor.Models.Customer
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Add Customer</h2>
+<hr />
+
+<form method="post" asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>    
+
+    <div class="form-floating mb-3">
+        <input asp-for="Name" class="form-control" placeholder="Enter name" />
+        <label asp-for="Name" class="form-label"></label>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="Address" class="form-control" placeholder="Enter address" />
+        <label asp-for="Address" class="form-label"></label>
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="ZipCode" class="form-control" placeholder="Enter zip code" />
+        <label asp-for="ZipCode" class="form-label"></label>
+        <span asp-validation-for="ZipCode" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="City" class="form-control" placeholder="Enter city" />
+        <label asp-for="City" class="form-label"></label>
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="Email" class="form-control" placeholder="Enter email" />
+        <label asp-for="Email" class="form-label"></label>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="PhoneNumber" class="form-control" placeholder="Enter phone number" />
+        <label asp-for="PhoneNumber" class="form-label"></label>
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="d-flex gap-2 mt-4">
+        <input type="submit" class="btn btn-success" value="Add Customer" />
+        <a asp-action="GetAllCustomers" class="btn btn-outline-secondary">Back to List</a>
+    </div>
+</form>

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Book>
+
+@{
+    ViewData["Title"] = "Books";
+    int totalPages = ViewData.ContainsKey("totalPages") ? (int)ViewData["totalPages"] : 1;
+    int currentPage = ViewData.ContainsKey("currentPage") ? (int)ViewData["currentPage"] : 1;
+}
+
+<h2>Edugrade's Library</h2>
+<hr />
+
+<form asp-action="Index" method="get">
+    <div class="d-flex">
+        <input class="form-control me-2" type="search" name="searchInput" placeholder="Search for title, author..." aria-label="Search" />
+        <button class="btn btn-outline-dark" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </div>
+    <div class="d-flex justify-content-between mt-3 mb-2">
+        <button class="btn btn-outline-secondary btn-sm clear-btn">View All</button>
+        <a asp-action="Create" class="btn btn-outline-success btn-sm">
+            <i class="fa-solid fa-plus"></i> Add Book
+        </a>
+    </div>
+</form>
+
+@if (Model.Any())
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Title)</th>
+                <th>@Html.DisplayNameFor(model => model.Author)</th>
+                <th>@Html.DisplayNameFor(model => model.Genre)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details"
+                           asp-route-bookId="@book.BookId"
+                           class="alert-link text-black">
+                            @book.Title
+                        </a>
+                    </td>
+                    <td>@book.Author</td>
+                    <td>@book.Genre</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="page-navigation">
+        <ul class="pagination justify-content-center">
+            @if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       href="@Url.Action("Index", new {searchInput = ViewData["searchInput"], pageNumber = currentPage - 1})">
+                        Previous
+                    </a>
+                </li>
+            }
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new {searchInput = ViewData["searchInput"], pageNumber = i})">@i</a>
+                </li>
+            }
+            @if(currentPage < totalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new {searchInput = ViewData["searchInput"], pageNumber = currentPage + 1})">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+else
+{
+    <h4 class="mt-4">No books found</h4>
+}

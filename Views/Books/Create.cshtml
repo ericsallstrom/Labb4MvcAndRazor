@@ -1,0 +1,74 @@
+﻿@model Labb4MvcAndRazor.Models.Book
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Add Book</h2>
+<hr />
+
+<form method="post" asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="Title" class="form-control" placeholder="Enter title" />
+        <label asp-for="Title" class="form-label"></label>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="Author" class="form-control" placeholder="Enter author" />
+        <label asp-for="Author" class="form-label"></label>
+        <span asp-validation-for="Author" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="Genre" class="form-control" placeholder="Enter genre" />
+        <label asp-for="Genre" class="form-label"></label>
+        <span asp-validation-for="Genre" class="text-danger"></span>
+    </div>
+
+    <div class="row g-2">
+        <div class="col-md form-floating mb-3">            
+            <input asp-for="PublicationDate" type="date" class="form-control" />
+            <label asp-for="PublicationDate" class="form-label"></label>
+            <span asp-validation-for="PublicationDate" class="text-danger"></span>
+        </div>
+        <div class="col-md form-floating mb-3">
+            <input asp-for="Publisher" class="form-control" placeholder="Enter city" />
+            <label asp-for="Publisher" class="form-label"></label>
+            <span asp-validation-for="Publisher" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row g-2">
+        <div class="col-md form-floating mb-3">
+            <input asp-for="Language" class="form-control" placeholder="Enter ISBN" />
+            <label asp-for="Language" class="form-label"></label>
+            <span asp-validation-for="Language" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md form-floating mb-3">
+        <input asp-for="NumberOfPages" type="number" class="form-control" placeholder="Enter number of pages" />
+        <label asp-for="NumberOfPages" class="form-label"></label>
+        <span asp-validation-for="NumberOfPages" class="text-danger"></span>
+    </div>
+    </<div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="ISBN" class="form-control" placeholder="Enter ISBN" />
+            <label asp-for="ISBN" class="form-label"></label>
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <textarea asp-for="Description" style="height: 200px" class="form-control" placeholder="Enter a description of max 400 characters"></textarea>
+            <label asp-for="Description" class="form-label"></label>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+            <input type="submit" class="btn btn-success" value="Add Book" />
+            <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+        </div>
+</form>

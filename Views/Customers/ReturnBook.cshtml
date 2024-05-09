@@ -1,0 +1,29 @@
+﻿@model Labb4MvcAndRazor.Models.View_Models.ReturnBookViewModel
+
+@{
+    ViewData["Title"] = "Return Book";
+}
+
+<h2>Return a book</h2>
+<hr />
+
+<h4>@Model.CustomerName</h4>
+
+<form method="post" asp-action="ReturnBook">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>    
+
+    <input hidden asp-for="CustomerId" />
+
+    <div class="form-group mb-4">
+        <label asp-for="BookId" class="control-label">Select Book to Return</label>
+        <select asp-for="BookId" asp-items="ViewBag.Books" class="form-control">
+            <option disabled selected>-- Select a book --</option>
+        </select>
+        <span asp-validation-for="BookId"></span>
+    </div>
+
+    <div class="d-flex gap-2">
+        <input type="submit" class="btn btn-success" value="Return Book" />
+        <a asp-action="Details" asp-route-customerId="@Model.CustomerId" class="btn btn-outline-secondary">Back to Details</a>
+    </div>
+</form>

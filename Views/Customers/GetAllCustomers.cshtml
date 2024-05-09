@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Customer>
+
+@{
+    ViewData["Title"] = "Customers";
+    int totalPages = ViewData.ContainsKey("totalPages") ? (int)ViewData["totalPages"] : 1;
+    int currentPage = ViewData.ContainsKey("currentPage") ? (int)ViewData["currentPage"] : 1;
+}
+
+<h2>Customers</h2>
+<hr />
+
+<form asp-action="GetAllCustomers" method="get">
+    <div class="d-flex">
+        <input class="form-control me-2" type="search" name="searchInput" placeholder="Search" aria-label="Search" />
+        <button class="btn btn-outline-dark" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </div>
+    <div class="d-flex justify-content-between mt-3 mb-2">
+        <button class="btn btn-outline-secondary btn-sm clear-btn">View All</button>
+        <a asp-action="Create" class="btn btn-outline-success btn-sm">
+            <i class="fa-solid fa-plus"></i> New Customer
+        </a>
+    </div>
+</form>
+
+@if (Model.Any())
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>                
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th>@Html.DisplayNameFor(model => model.City)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>                    
+                    <td class="align-middle">@customer.Name</td>
+                    <td class="align-middle">@customer.Email</td>
+                    <td class="align-middle">@customer.City</td>
+                    <td class="d-flex gap-1 justify-content-end">
+                        <a asp-action="Details"
+                           asp-route-customerId="@customer.CustomerId"
+                           class="btn btn-outline-info btn-sm"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="bottom"
+                           title="Details">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </a>
+                        <a asp-action="Edit"
+                           asp-route-customerId="@customer.CustomerId"
+                           class="btn btn-outline-primary btn-sm"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="bottom"
+                           title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form method="post"
+                              asp-action="Delete"
+                              asp-route-customerId="@customer.CustomerId"
+                              onsubmit="return confirm('Are you sure you want to delete this customer?');"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="bottom"
+                              title="Delete">
+                            <button class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="page-navigation">
+        <ul class="pagination justify-content-center">
+            @if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       href="@Url.Action("GetAllCustomers", new {searchInput = ViewData["searchInput"], pageNumber = currentPage - 1})">
+                        Previous
+                    </a>
+                </li>
+            }
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("GetAllCustomers", new {searchInput = ViewData["searchInput"], pageNumber = i})">@i</a>
+                </li>
+            }
+            @if (currentPage < totalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("GetAllCustomers", new {searchInput = ViewData["searchInput"], pageNumber = currentPage + 1})">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+else
+{
+    <h4 class="mt-4">No customers found</h4>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.clear-btn').click(function () {
+                $('input[name="searchInput"]').val('');
+            });
+        });
+    </script>
+}
